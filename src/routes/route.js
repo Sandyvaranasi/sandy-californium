@@ -27,11 +27,8 @@ router.get('/test-me', function (req, res) {
     console.log(utility.getBatchInfo)
 
     format.trim("   FunctionUp          ")
-    console.log(format.trim)
     format.toLowerCase("CALIFORNIUM")
-    console.log(format.toLowerCase)
     format.toUpperCase("sandeep")
-    console.log(format.toUpperCase)
 
     const month = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
     console.log(lodash.chunk(month,[size=3]))
