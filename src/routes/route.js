@@ -6,6 +6,8 @@ const _ = require('underscore')
 const mentorModule = require('../abc/xyz/myModule'); 
 const req = require('express/lib/request');
 const { route } = require('express/lib/application');
+const movies = require('../movies1/movies')
+const films = require('../films/films1')
 
 
 router.get("/profile-details", function(req, res){
@@ -72,6 +74,23 @@ router.get("/shoes", function(req, res){
     //req.query.size
     //req.query.brand
     res.send("dummy shoes response")
+})
+
+router.get('/movies/', function (req, res) {
+    res.send(["Harry Potter", "Narnia", "Mission Impossible", "Avengers"])
+})
+
+router.get('/movies/:indexNumber', function (req, res) {
+    res.send('The name of movie is written on console.')
+    movies.movie1(req.params.indexNumber)
+});
+
+router.get('/films/', function (req, res) {
+    res.send(films.films)
+})
+router.get('/films2/:i', function (req, res) {
+    console.log(films.films2(req.params.i))
+    res.send('The movie is on console.')
 })
 
 module.exports = router;
