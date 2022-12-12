@@ -8,6 +8,7 @@ const req = require('express/lib/request');
 const { route } = require('express/lib/application');
 const movies = require('../movies1/movies')
 const films = require('../films/films1')
+const missingNumber = require('../missNum/missNumber')
 
 
 router.get("/profile-details", function(req, res){
@@ -82,7 +83,8 @@ router.get('/movies/', function (req, res) {
 
 router.get('/movies/:indexNumber', function (req, res) {
     res.send('The name of movie is written on console.')
-    movies.movie1(req.params.indexNumber)
+ movies.movie1(req.params.indexNumber)
+    
 });
 
 router.get('/films/', function (req, res) {
@@ -92,5 +94,21 @@ router.get('/films2/:i', function (req, res) {
     console.log(films.films2(req.params.i))
     res.send('The movie is on console.')
 })
+
+   // -write an api which gives the missing number in an array of integers starting from 1….e.g [1,2,3,5,6,7] : 4 is missing
+ router.get("/sol1", function (req, res) {
+    let arr= [1,2,3,5,7]
+    res.send(missingNumber.getMissing(arr)  );
+});
+
+   // -write an api which gives the missing number in an array of integers starting from anywhere….e.g [33, 34, 35, 37, 38]: 36 is missing
+ router.get("/sol2", function (req, res) {
+
+    let arr= [33, 34, 35, 37, 38]
+
+    res.send( missingNumber.getMissing(arr)  );
+});
+
+
 
 module.exports = router;
