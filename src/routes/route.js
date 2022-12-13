@@ -70,4 +70,57 @@ router.post("/test-post-4", function(req, res) {
     res.send(  { msg: arr , status: true }  )
 })
 
+// // adding new players info in array using POST API
+
+let playersInfo = [
+    {
+        'name': 'Virat',
+        'DOB':  "12/2/1997",
+        'gender': 'male',
+        'city': 'delhi',
+        'sport': [
+            'cricket'
+        ]
+    },
+    {
+        'name': 'Rahul',
+        'DOB':   "16/12/1997"  ,
+        'gender': 'male',
+        'city': 'U.P',
+        'sport': [
+            'kabaddi'
+        ]
+    },
+    {
+        'name': 'Mary kom',
+        'DOB':  "23/5/1994",
+        'gender': 'female',
+        'city': 'sikkim',
+        'sport': [
+            'boxing'
+        ]
+    },
+    {
+        'name': 'P.V Sindhu',
+        'DOB':   "12/3/1996"  ,
+        'gender': 'female',
+        'city': 'karnataka',
+        'sport': [
+            'badminton'
+        ]
+    }
+]
+router.post("/players", function (req, res) {
+    let newPlayer = req.body.player;
+       let a = playersInfo.filter(x=> x.name==newPlayer.name)
+       
+       if(a.length==0){
+        playersInfo.push(newPlayer);
+        return res.send(playersInfo)
+       }else{
+        return res.send(playersInfo);
+       }
+
+});
+
 module.exports = router;
