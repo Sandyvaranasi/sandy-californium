@@ -29,7 +29,7 @@ let persons= [
     votingStatus: false
  }
  ]
- router.post("/legalVoter", function(req,res){
+ router.post("/legalVoter/", function(req,res){
 let voter = req.query.votingAge;
 let canVote = persons.filter(x=> x.age>=voter);
 canVote.map(x=> x.votingStatus=true)
