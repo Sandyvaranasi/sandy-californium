@@ -1,46 +1,37 @@
-const UserModel= require("../models/userModel")
 
+const printDate= async function(req, res) {
 
+    res.send({ msg: "This is coming from controller (currentDate)"})
 
-
-const basicCode= async function(req, res) {
-    let tokenDataInHeaders= req.headers.token
-    console.log(tokenDataInHeaders)
-
-    console.log( "HEADER DATA ABOVE")
-    console.log( "hey man, congrats you have reached the Handler")
-    res.send({ msg: "This is coming from controller (handler)"})
     }
 
+const printIp= async function(req, res) {
+
+    res.send({ msg: "This is coming from controller (currentIP)"})
+    
+    }
+
+const printRoute= async function(req, res) {
+
+    res.send({ msg: "This is coming from controller (currentRoute)"})
+        
+    }
+
+const printAll= async function(req, res) {
+
+    res.send({ msg: "This is coming from controller (allTogather)"})
+            
+    }
+
+    const globalMid= async function(req, res) {
+
+        res.send({ msg: "This is coming from controller (allTogather by Global Middleware)"})
+                
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const createUser= async function (req, res) {
-    let data= req.body
-    let savedData= await UserModel.create(data)
-    res.send({msg: savedData})
-}
-
-const getUsersData= async function (req, res) {
-    let allUsers= await UserModel.find()
-    res.send({msg: allUsers})
-}
-
-module.exports.createUser= createUser
-module.exports.getUsersData= getUsersData
-module.exports.basicCode= basicCode
+module.exports.printDate= printDate
+module.exports.printIp= printIp
+module.exports.printRoute= printRoute
+module.exports.printAll= printAll
+module.exports.globalMid= globalMid
