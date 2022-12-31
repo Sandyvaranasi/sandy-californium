@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const userController= require("../controllers/userController")
-const commonMW = require("../middlewares/commonMw")
 //=======================================================================
 
 router.post("/create", userController.createUser)
 
-router.post("/login", userController.loginUser)
+router.post("/login", userController.createMeme)
 
-router.get("/getUserData/:userId",commonMW.authenticate, commonMW.authorise, userController.getUserData)
+router.get("/getUserData/:memeId", userController.getUserData)
 
-router.put("/update/:userId",commonMW.authenticate, commonMW.authorise, userController.updateUser)
-
-router.delete("/delete/:userId",commonMW.authenticate, commonMW.authorise, userController.deleteUser)
-//===========================================================================
+// //===========================================================================
 module.exports = router;

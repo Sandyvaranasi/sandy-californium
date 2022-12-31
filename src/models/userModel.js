@@ -27,4 +27,4 @@ const userSchema = new mongoose.Schema( {
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('authUser', userSchema)
+module.exports = mongoose.model('memeAdmin', userSchema)
