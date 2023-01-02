@@ -1,12 +1,10 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express();
 const {default : mongoose} = require('mongoose');
 mongoose.set('strictQuery', true);
 const route = require('./routes/route.js');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 
 mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.eimj9vg.mongodb.net/group9Database", {
     useNewUrlParser: true
@@ -16,6 +14,6 @@ mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.e
 
 app.use('/', route)
 
-app.listen(process.env.PORT || 4000, function(){
- console.log("server running on port" + (process.env.PORT || 4000));
+app.listen(4000, function(){
+ console.log("server running on port" + 4000);
 }) 
