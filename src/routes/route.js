@@ -1,21 +1,26 @@
 const express = require('express');
 const controller = require('../controllers/userController.js');
 const router = express.Router();
+const midware=require('../middlewares/middleware')
 
 
 
 
 router.post("/createAuthor", controller.createAuthor)
 
-router.post("/createblog", controller.createblog)
+router.post("/login", controller.authorLogin)
 
-router.get("/getBlog", controller.getBlog)
+router.post("/createblog",midware.authentication, controller.createblog)
 
-router.put("/updateBlog/:blogId", controller.updateBlog)
+router.get("/getBlog",midware.authentication, controller.getBlog)
 
-router.delete("/deleteBlog/:blogId", controller.deleteBlog)
+router.put("/updateBlog/:blogId",midware.authentication ,controller.updateBlog)
 
-router.delete("/deleteBlogs", controller.deleteBlogs)
+router.delete("/deleteBlog/:blogId", midware.authentication, controller.deleteBlog)
+
+router.delete("/deleteBlogs",midware.authentication, controller.deleteBlogs)
+
+
 
 
 
