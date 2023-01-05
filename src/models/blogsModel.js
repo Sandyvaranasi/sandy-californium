@@ -24,7 +24,7 @@ const blogSchema = new mongoose.Schema({
         required: true
     },
     subcategory: {
-        type: [String] // examples[technology-[web development, mobile development, AI, ML etc]]
+        type: [String]
     },
     deletedAt: {
         type : Date
