@@ -11,10 +11,13 @@ const createAuthor = async function (req, res) {
         if (!data.title) return res.status(400).send({ status: false, message: "title is necessary" });
         if (!(["Mr", "Mrs", "Miss"].includes(data.title))) return res.status(400).send({ status: false, message: "you can use only Mr, Mrs, Miss" })
         if (!data.email) return res.status(400).send({ status: false, message: "email is necessary" });
-        if (!(email.match(/.+\@.+\..+/))) return res.status(400).send({ status: false, message: "invalid email" });
+        if (!(data.email.match(/.+\@.+\..+/))) return res.status(400).send({ status: false, message: "invalid email" });
         let rawEmail = await authorModel.find({ email: data.email })
         if (rawEmail.length != 0) return res.status(400).send({ status: false, message: "email already exist" });
         if (!data.password) return res.status(400).send({ status: false, message: "password is necessary" });
+        if(!(data.password.match(/(?=.{8,})/))) return res.status(400).send({status :false,error:"Password should be of atleast 8 charactors"})
+        if(!(data.password.match(/.*[a-zA-Z]/))) return res.status(400).send({status :false,error:"Password should contain alphabets"})
+        if(!(data.password.match(/.*\d/))) return res.status(400).send({status :false,error:"Password should contain digits"})
         let createdAuthor = await authorModel.create(data);
         res.status(201).send({ status: true, data: createdAuthor })
     } catch (error) {
