@@ -81,7 +81,7 @@ const updateBlog = async function (req, res) {
 
             }
             else {
-                tagsArr.concat(data.tags)
+                tagsArr=[...tagsArr,...data.tags]
             }
             data.tags = tagsArr
         }
@@ -92,7 +92,7 @@ const updateBlog = async function (req, res) {
                 subcategoryArr = [...subcategoryArr, ...data.subcategory.split(",")]
             }
             else {
-                subcategoryArr.concat(data.subcategory)
+                subcategoryArr=[...subcategoryArr,...data.subcategory]
             }
             data.subcategory = subcategoryArr
 
