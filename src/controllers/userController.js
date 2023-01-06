@@ -15,9 +15,9 @@ const createAuthor = async function (req, res) {
         let rawEmail = await authorModel.find({ email: data.email })
         if (rawEmail.length != 0) return res.status(400).send({ status: false, message: "email already exist" });
         if (!data.password) return res.status(400).send({ status: false, message: "password is necessary" });
-        if(!(data.password.match(/(?=.{8,})/))) return res.status(400).send({status :false,error:"Password should be of atleast 8 charactors"})
-        if(!(data.password.match(/.*[a-zA-Z]/))) return res.status(400).send({status :false,error:"Password should contain alphabets"})
-        if(!(data.password.match(/.*\d/))) return res.status(400).send({status :false,error:"Password should contain digits"})
+        if (!(data.password.match(/(?=.{8,})/))) return res.status(400).send({ status: false, error: "Password should be of atleast 8 charactors" })
+        if (!(data.password.match(/.*[a-zA-Z]/))) return res.status(400).send({ status: false, error: "Password should contain alphabets" })
+        if (!(data.password.match(/.*\d/))) return res.status(400).send({ status: false, error: "Password should contain digits" })
         let createdAuthor = await authorModel.create(data);
         res.status(201).send({ status: true, data: createdAuthor })
     } catch (error) {
@@ -70,6 +70,7 @@ const updateBlog = async function (req, res) {
         let x = await blogModel.findById(blogId)
         if (!x) return res.status(404).send({ status: false, error: "No relevant data found by this Id" })
         if (x.authorId != req.authorId) return res.status(403).send({ status: false, error: "You are not allowed to perform this modification" })
+        if (x.isDeleted == true) return res.status(404).send({ status: false, error: "Blog doesn't exist" })
         if (x.isPublished == false) {
             data.isPublished = true;
             data.publishedAt = Date.now();
@@ -80,11 +81,10 @@ const updateBlog = async function (req, res) {
             if (typeof (data.tags) == "string") {
                 data.tags = data.tags.trim();
                 tagsArr = [...tagsArr, ...data.tags.split(",")]
-                console.log(tagsArr);
 
             }
             else {
-                tagsArr=[...tagsArr,...data.tags]
+                tagsArr = [...tagsArr, ...data.tags]
             }
             data.tags = tagsArr
         }
@@ -95,7 +95,7 @@ const updateBlog = async function (req, res) {
                 subcategoryArr = [...subcategoryArr, ...data.subcategory.split(",")]
             }
             else {
-                subcategoryArr=[...subcategoryArr,...data.subcategory]
+                subcategoryArr = [...subcategoryArr, ...data.subcategory]
             }
             data.subcategory = subcategoryArr
 
@@ -126,10 +126,12 @@ const deleteBlog = async function (req, res) {
 const deleteBlogs = async function (req, res) {
     try {
         let data = req.query;
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, error: "Please provide suitable filter conditions" })
 
         let deletedBlog = await blogModel.find(data);
 
         if (deletedBlog.length == 0) return res.status(400).send({ status: false, error: "please provide a valid filter condition" })
+
         let deletedBlogs = deletedBlog.filter(x => x.authorId == req.authorId)
 
         if (deletedBlogs.length === 0) return res.status(403).send({ status: false, error: "You are not allowed to perform this modification" })
