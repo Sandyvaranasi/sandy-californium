@@ -1,6 +1,7 @@
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogsModel");
 const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
 
 //=============================================CREATE AUTHOR==================================================================================================
 const createAuthor = async function (req, res) {
@@ -31,6 +32,7 @@ const createblog = async function (req, res) {
         if (!data.title) return res.status(400).send({ status: false, message: "title is necessary" });
         if (!data.body) return res.status(400).send({ status: false, message: "body is necessary" });
         if (!data.authorId) return res.status(400).send({ status: false, message: "authorId is necessary" });
+        if(!(mongoose.isValidObjectId(data.authorId))) return res.status(400).send({status:false,error : "Invalid author Id"})
         if (!data.category) return res.status(400).send({ status: false, message: "category is necessary" });
         let validAuthor = await authorModel.findById(data.authorId)
         if (!validAuthor) return res.status(400).send({ status: false, msg: "invalid author Id" })
@@ -52,11 +54,13 @@ const createblog = async function (req, res) {
 const getBlog = async function (req, res) {
     try {
         let data = req.query;
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, error: "Please provide any filter conditions" })
         data.isDeleted = false;
         data.isPublished = true;
         let blogs = await blogModel.find(data).populate('authorId')
         if (blogs.length == 0) return res.status(404).send({ msg: "No data found" });
         res.status(200).send({ status: true, data: blogs });
+        
 
     } catch (error) {
         res.status(500).send({ status: false, message: error.message });
@@ -66,6 +70,7 @@ const getBlog = async function (req, res) {
 const updateBlog = async function (req, res) {
     try {
         let blogId = req.params.blogId;
+        if(!(mongoose.isValidObjectId(blogId))) return res.status(400).send({status:false,error : "Invalid blog Id"})
         let data = req.body;
         let x = await blogModel.findById(blogId)
         if (!x) return res.status(404).send({ status: false, error: "No relevant data found by this Id" })
@@ -112,6 +117,7 @@ const updateBlog = async function (req, res) {
 const deleteBlog = async function (req, res) {
     try {
         let data = req.params.blogId;
+        if(!(mongoose.isValidObjectId(data))) return res.status(400).send({status:false,error : "Invalid blog Id"})
         let deletedBlog = await blogModel.findById(data)
         if (!deletedBlog) return res.status(404).send({ status: false, error: "No Data with this Id" })
         if (deletedBlog.authorId != req.authorId) return res.status(403).send({ status: false, error: "You are not allowed to perform this modification" })
@@ -126,7 +132,7 @@ const deleteBlog = async function (req, res) {
 const deleteBlogs = async function (req, res) {
     try {
         let data = req.query;
-        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, error: "Please provide suitable filter conditions" })
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, error: "Please provide any filter conditions" })
 
         let deletedBlog = await blogModel.find(data);
 
