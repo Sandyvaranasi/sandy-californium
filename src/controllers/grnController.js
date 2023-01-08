@@ -1,5 +1,5 @@
 const grnModel = require("../models/grnModel");
-grnLineItemModel = require("../models/grnLineItem")
+const grnLineItemModel = require("../models/grnLineItem")
 const mongoose = require('mongoose')
 
 //=============================================CREATE AUTHOR==================================================================================================
