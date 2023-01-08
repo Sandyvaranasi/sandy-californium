@@ -6,7 +6,7 @@ const route = require('./routes/route.js');
 
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.eimj9vg.mongodb.net/group9Database", {
+mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.eimj9vg.mongodb.net/bonus1Database", {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
@@ -14,6 +14,6 @@ mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.e
 
 app.use('/', route)
 
-app.listen(4000, function(){
- console.log("server running on port" + 4000);
+app.listen(3000, function(){
+ console.log("server running on port " + 3000);
 }) 
