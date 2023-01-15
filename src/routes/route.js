@@ -4,10 +4,7 @@ const controller = require('../controllers/controllers')
 
 
 
-
-router.post('/functionup/colleges',controller.createCollege)
-router.post('/functionup/interns',controller.createIntern)
-router.get('/functionup/collegeDetails',controller.collegeDetails)
+ router.get('/assets',controller.coinDetails)
 
 
 
@@ -16,6 +13,8 @@ router.all("/*",function(req,res){
 })
 
 
+
+// router.post('/abc',controller.createCoin)
 
 
 
