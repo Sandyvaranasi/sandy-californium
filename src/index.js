@@ -1,26 +1,19 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const port = process.env.PORT || 3000;
-const route = require("./routes/route");
-mongoose.set("strictQuery", true);
+const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+mongoose.set('strictQuery',true);
+const route = require('./routes/route');
 
 app.use(express.json());
 
-mongoose
-  .connect(
-    "mongodb+srv://Chetan_ProjectClustor:PNr1Fn8OcRu2cGmk@project1.h4p8xqh.mongodb.net/group13Database",
-    { useNewUrlParser: true }
-  )
-  .then(() => {
-    console.log("mongoDB is connected");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+mongoose.connect('mongodb+srv://cassmmmg:Functionup2022@cluster0.quflkwm.mongodb.net/Project-1',{
+  useNewUrlParser : true
+})
+.then(()=> console.log("DB connected"))
+.catch(err=>console.log(err.message));
 
-app.use("/", route);
+app.use('/',route);
 
-app.listen(port, () => {
-  console.log(`App is running on port ${port}`);
-});
+app.listen(3000,()=>{
+  console.log("Server online on port 3000");
+})
